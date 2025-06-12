@@ -8,13 +8,13 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebaseConfig";
-import { useNavigate } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { PHOTO_URL } from "../utils/constants";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMsg, setErrorMsg] = useState(null);
   const name = useRef(null);
@@ -40,11 +40,9 @@ const Login = () => {
           // Signed up
           const user = userCredential.user;
           //signed up user data is stored in user variable
-          console.log(user);
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL:
-              "https://avatars.githubusercontent.com/u/173532256?s=400&u=4f0f8591983a4af5ebe038661d3686689ec06bf7&v=4",
+            photoURL: PHOTO_URL, //since PHOTO_URL is not a jsx anymore
           })
             .then(() => {
               // Profile updated!
@@ -60,8 +58,6 @@ const Login = () => {
                 })
               );
               //Now the userSlice is also updated with new data
-              //Now we can navigate
-              navigate("/browse");
             })
             .catch((error) => {
               setErrorMsg(error.message);
@@ -83,7 +79,6 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           console.log(user);
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;

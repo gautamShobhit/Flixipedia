@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import VideoTitle from "./VideoTitle";
 import VideoBg from "./VideoBg";
+//import { useEffect, useState } from "react";
 
 const MainContainer = () => {
   //Since we need to build a vdo title and a vdo bg
@@ -9,7 +10,7 @@ const MainContainer = () => {
   //AKA early return -> It prevents our code fetchinh movies when it is null
   if (!movies) return;
 
-  const mainMovie = movies[0];
+  const mainMovie = movies[3];
   const { original_title, overview, id } = mainMovie;
   return (
     <div>
@@ -17,5 +18,25 @@ const MainContainer = () => {
       <VideoBg movieId={id} />
     </div>
   );
+  // const movies = useSelector((store) => store.movies?.nowPlayingMovies);
+  // const [randomMovie, setRandomMovie] = useState(null);
+
+  // useEffect(() => {
+  //   if (movies && movies.length > 0) {
+  //     const randomIndex = Math.floor(Math.random() * movies.length);
+  //     setRandomMovie(movies[randomIndex]);
+  //   }
+  // }, [movies]);
+
+  // if (!randomMovie) return null;
+
+  // const { original_title, overview, id } = randomMovie;
+
+  // return (
+  //   <div>
+  //     <VideoTitle title={original_title} overview={overview} />
+  //     <VideoBg movieId={id} />
+  //   </div>
+  // );
 };
 export default MainContainer;

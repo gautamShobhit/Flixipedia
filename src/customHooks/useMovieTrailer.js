@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { API_OPTIONS } from "../utils/constants";
-import { addTrailerVideos } from "../utils/moviesSlice";
+import { addTrailerVideos, clearTrailerVideo } from "../utils/moviesSlice";
 import { useEffect } from "react";
 
 const useMovieTrailer = (movieId) => {
@@ -8,6 +8,7 @@ const useMovieTrailer = (movieId) => {
 
   //Make an API call with the movie ID we have got
   const getMovieVideos = async () => {
+    dispatch(clearTrailerVideo());
     const data = await fetch(
       "https://api.themoviedb.org/3/movie/" +
         movieId +
@@ -30,7 +31,7 @@ const useMovieTrailer = (movieId) => {
 
   useEffect(() => {
     getMovieVideos();
-  }, []);
+  }, [movieId, dispatch]);
 };
 
 export default useMovieTrailer;

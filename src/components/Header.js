@@ -44,26 +44,35 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="z-10 absolute flex justify-between bg-gradient-to-b from-black ">
-      <img
-        className="m-2 w-2/12 transition-all delay-100 ease-in-out duration-300 hover:scale-95 "
-        src={netflixLogo}
-        alt="logo"
-      />
+    <div className="w-full top-0 left-0 items-center z-20 absolute flex justify-between bg-gradient-to-b from-black">
+      <div className="p-4">
+        <img
+          className="ml-10 w-36 transition-all delay-100 ease-in-out duration-300 hover:scale-95"
+          src={netflixLogo}
+          alt="logo"
+        />
+      </div>
+
       {user && (
-        <div className="p-2 m-2 bg-white bg-opacity-20 rounded-lg">
-          <p className="font-bold text-white text-center">{user.displayName}</p>
+        <div className="flex">
           <img
-            className="m-2 h-12 mx-auto rounded-full"
+            className="mx-2 h-12 my-auto rounded-full"
             src={user.photoURL}
             alt="userPfp"
           />
-          <button
-            className=" p-2 bg-red-600 text-white text-sm font-bold rounded-lg hover:bg-red-700"
-            onClick={handleSignOut}
-          >
-            Sign Out
-          </button>
+          <div className="flex p-2 m-2  bg-white bg-opacity-20 rounded-lg">
+            <div>
+              <p className="font-bold text-white text-center">
+                {user.displayName}
+              </p>
+              <button
+                className=" p-2 bg-red-600 text-white text-sm font-bold rounded-lg hover:bg-red-700"
+                onClick={handleSignOut}
+              >
+                Sign Out
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

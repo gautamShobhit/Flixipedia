@@ -5,12 +5,12 @@ import VideoBg from "./VideoBg";
 
 const MainContainer = () => {
   //Since we need to build a vdo title and a vdo bg
-  const movies = useSelector((store) => store.movies?.nowPlayingMovies);
+  const movies = useSelector((store) => store.movies?.upcomingMovies);
   //There could be case when "movies" is empty
   //AKA early return -> It prevents our code fetchinh movies when it is null
   if (!movies) return;
 
-  const mainMovie = movies[3];
+  const mainMovie = movies[14];
   const { original_title, overview, id } = mainMovie;
   return (
     <div>

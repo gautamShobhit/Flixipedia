@@ -41,17 +41,17 @@ const SearchBar = () => {
   return (
     <div className="flex justify-center">
       <form
-        className="flex justify-between p-4 w-3/5  bg-black bg-opacity-70 rounded-lg"
+        className="flex justify-between md:m-0 m-4 p-4 md:w-3/5 w-screen bg-black bg-opacity-70 rounded-lg border-b border-gray-400 shadow-md shadow-gray-500"
         onSubmit={(e) => e.preventDefault()}
       >
         <input
           ref={searchText}
-          className="w-10/12 p-2 rounded-lg mr-2 text-white font-bold bg-gray-700 border border-gray-400"
+          className="md:text-base text-xs w-10/12 p-2 rounded-lg mr-2 text-white font-bold bg-gray-700 border border-gray-400"
           type="text"
           placeholder="What would you like to watch today ?"
         />
         <button
-          className="w-2/12 p-2 bg-red-600 font-bold rounded-lg text-white hover:bg-red-700 "
+          className="w-2/12 p-2 bg-red-600 font-bold rounded-lg text-white md:text-base text-xs text-center hover:bg-red-700 "
           onClick={handleGptSearchClick}
         >
           Search

@@ -1,11 +1,16 @@
 import netflixLogo from "../assets/netflixLogo.jpg";
+import signOutLogo from "../assets/signOutLogo.jpg";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utils/userSlice";
-import { resetSearch, toggleGptSearch } from "../utils/gptSlice";
+import {
+  clearMovieSearchResults,
+  resetSearch,
+  toggleGptSearch,
+} from "../utils/gptSlice";
 import searchBtn from "../assets/searchBtn.jpg";
 
 const Header = () => {
@@ -15,6 +20,10 @@ const Header = () => {
   const showGptSearch = useSelector((store) => store.search?.isGptSearch);
   const handleSearchClick = () => {
     dispatch(toggleGptSearch());
+    //It doesn't matter what position we are in,
+    //We need to enter search page with empty list
+    //And we need to take exit by emptying the list
+    dispatch(clearMovieSearchResults());
   };
   const handleSignOut = () => {
     signOut(auth)
@@ -52,9 +61,9 @@ const Header = () => {
 
   return (
     <div className="w-full top-0 left-0 items-center z-20 absolute flex justify-between bg-gradient-to-b from-black ">
-      <div className="p-4">
+      <div className="md:p-4 p-2">
         <img
-          className="ml-8 w-36 transition-all delay-100 ease-in-out duration-300 hover:scale-95"
+          className="md:ml-8 md:w-40 w-24 transition-all delay-100 ease-in-out duration-300 hover:scale-95"
           src={netflixLogo}
           alt="logo"
         />
@@ -63,33 +72,37 @@ const Header = () => {
       {user && (
         <div className="flex">
           <button
-            className="m-2 h-10 py-2 px-4 my-auto  bg-black bg-opacity-70 text-black rounded-lg transition-all ease-in-out delay-70 duration-300 hover:scale-95"
+            className=" md:h-10 h-6 md:py-2 my-auto rounded-lg transition-all ease-in-out delay-70 duration-300 hover:scale-95"
             onClick={handleSearchClick}
           >
             {showGptSearch ? (
-              "🏠"
+              <h1 className="text-white font-semibold md:text-base text-xs">
+                Home
+              </h1>
             ) : (
               <img className="w-6" src={searchBtn} alt="Search Button" />
             )}
           </button>
+          <div className="flex p-2 md:m-2  rounded-lg">
+            <p className="mr-2 font-bold text-white text-xs my-auto">
+              {user.displayName}
+            </p>
+            <button
+              className=" p-2 bg-red-600 rounded-lg hover:bg-red-700"
+              onClick={handleSignOut}
+            >
+              <img
+                className="md:w-4 w-2"
+                src={signOutLogo}
+                alt="sign out logo"
+              />
+            </button>
+          </div>
           <img
-            className="mx-2 h-10 my-auto rounded-full"
+            className="mr-2 md:h-8 h-6 my-auto rounded-full"
             src={user.photoURL}
             alt="userPfp"
           />
-          <div className="flex p-2 m-2  bg-black bg-opacity-70 rounded-lg">
-            <div>
-              <p className="font-bold text-white text-center text-xs">
-                {user.displayName}
-              </p>
-              <button
-                className=" p-2 bg-red-600 text-white text-xs font-bold rounded-lg hover:bg-red-700"
-                onClick={handleSignOut}
-              >
-                Sign Out
-              </button>
-            </div>
-          </div>
         </div>
       )}
     </div>

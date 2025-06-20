@@ -92,33 +92,37 @@ const Login = () => {
   };
   return (
     <div>
-      <div className="z-10 absolute inset-0 bg-black bg-opacity-40"></div>
+      <div className="md:w-screen h-screen object-cover z-10 fixed inset-0 bg-black bg-opacity-40"></div>
       <Header />
-      <img className="absolute" src={netflixBg} alt="Background Img" />
+      <img
+        className="fixed h-screen md:w-screen object-cover "
+        src={netflixBg}
+        alt="Background Img"
+      />
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="p-10 z-10 w-1/4 m-48 mx-auto left-0 right-0 absolute bg-black bg-opacity-65 rounded-lg"
+        className="md:p-10 z-10 p-4 md:w-1/4 w-3/4 md:mt-48 mx-auto mt-20 left-0 right-0 absolute bg-gray-600 bg-opacity-50 rounded-lg"
       >
-        <h1 className="mb-8 text-4xl text-white font-bold ">
+        <h1 className="md:mb-8 mb-4 md:text-4xl text-lg text-white font-bold ">
           {isSignIn ? "Sign In" : "Sign Up"}
         </h1>
         {!isSignIn && (
           <input
             ref={name}
-            className="p-3 mb-4 border border-gray-400 rounded-lg w-full h-14 bg-gray-700 bg-opacity-50 text-white"
+            className="md:p-3 p-2 md:mb-4 mb-2 border border-gray-400 rounded-lg w-full bg-gray-700 bg-opacity-50 text-white"
             type="text"
             placeholder="User Name"
           />
         )}
         <input
           ref={email}
-          className="p-3 mb-4 border border-gray-400 rounded-lg w-full h-14 bg-gray-700 bg-opacity-50 text-white"
+          className="md:p-3 p-2 md:mb-4 mb-2 border border-gray-400 rounded-lg w-full bg-gray-700 bg-opacity-50 text-white"
           type="text"
           placeholder="E-mail"
         />
         <input
           ref={password}
-          className="p-3 mb-4 border border-gray-400 rounded-lg w-full h-14 bg-gray-700 bg-opacity-50 text-white"
+          className="md:p-3 p-2 md:mb-4 mb-2 border border-gray-400 rounded-lg w-full  bg-gray-700 bg-opacity-50 text-white"
           type="password"
           placeholder="Password"
         />

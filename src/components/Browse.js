@@ -8,6 +8,8 @@ import usePopularMovies from "../customHooks/usePopularMovies";
 import GptSearch from "./GptSearch";
 import { useSelector } from "react-redux";
 
+import { Outlet } from "react-router-dom";
+
 const Browse = () => {
   //Makes API call for movies and dispatch action to add movies list in slice
   useNowPlayingMovies();
@@ -17,11 +19,14 @@ const Browse = () => {
 
   //subscribe to the store for getting GptSearch Component
   const showGptSearch = useSelector((store) => store.search?.isGptSearch);
+  const isMoviePage = useSelector((store) => store.movieInfo.isMoviePage);
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-x-hidden">
       <Header />
-      {showGptSearch ? (
+      {isMoviePage ? (
+        <Outlet />
+      ) : showGptSearch ? (
         <GptSearch />
       ) : (
         <>
@@ -29,6 +34,7 @@ const Browse = () => {
           <SecondaryContainer />
         </>
       )}
+      {/* Either both true that is when user search and select a movie or isMoviePage true when a user directly selects one of the movie from browse page */}
     </div>
   );
 };

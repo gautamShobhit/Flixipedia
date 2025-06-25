@@ -1,8 +1,8 @@
 const VideoTitle = ({ title, overview }) => {
   return (
-    <div className="w-full aspect-video md:pt-72 pt-[20%] md:pl-24 pl-8 absolute text-white bg-gradient-to-r from-black  ">
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent "></div>
-
+    // w-screen was causing overflow in x-axis
+    <div className="overflow-x-hidden w-full aspect-video md:pt-72 pt-[20%] md:pl-24 pl-8 absolute text-white bg-gradient-to-r from-black  ">
+      <div className="overflow-x-hidden absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent "></div>
       <div className="absolute">
         <h1 className="md:text-4xl text-base font-bold md:mb-4 mb-2 w-1/3">
           {title}

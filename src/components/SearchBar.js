@@ -28,7 +28,7 @@ const SearchBar = () => {
       model: "gemini-2.0-flash",
       contents: searchQuery,
     });
-    //console.log(response.text);
+    //(response.text);
     const getMovies = response.text.split(", ");
     const promiseArray = getMovies.map((movie) => searchTMDB(movie));
     const tmdbResults = await Promise.all(promiseArray);
@@ -41,12 +41,12 @@ const SearchBar = () => {
   return (
     <div className="flex justify-center">
       <form
-        className="flex justify-between md:m-0 m-4 p-4 md:w-3/5 w-screen bg-black bg-opacity-70 rounded-lg border-b border-gray-400 shadow-md shadow-gray-500"
+        className="flex justify-between md:m-0 m-4 p-4 md:w-3/5 w-screen bg-black bg-opacity-70 rounded-lg border-b border-white shadow-md shadow-red-400"
         onSubmit={(e) => e.preventDefault()}
       >
         <input
           ref={searchText}
-          className="md:text-base text-xs w-10/12 p-2 rounded-lg mr-2 text-white font-bold bg-gray-700 border border-gray-400"
+          className="md:text-base text-xs w-10/12 p-2 rounded-lg mr-2 text-white font-bold bg-gray-900 border border-gray-400"
           type="text"
           placeholder="What would you like to watch today ?"
         />

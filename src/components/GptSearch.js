@@ -10,10 +10,12 @@ const GptSearch = () => {
         src={netflixBg}
         alt="Background Img"
       />
-      <div className="absolute z-10 mt-20  w-full">
-        <SearchBar />
-        <MovieSuggestions />
-      </div>
+      {
+        <div className="absolute z-10 mt-20  w-full">
+          <SearchBar />
+          <MovieSuggestions />
+        </div>
+      }
     </div>
   );
 };

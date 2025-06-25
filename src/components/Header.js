@@ -11,20 +11,13 @@ import {
   resetSearch,
   toggleGptSearch,
 } from "../utils/gptSlice";
-import searchBtn from "../assets/searchBtn.jpg";
+// import searchBtn from "../assets/searchBtn.jpg";
+import { resetMovieDetails, toggleIsMoviePage } from "../utils/movieInfoSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
-  const showGptSearch = useSelector((store) => store.search?.isGptSearch);
-  const handleSearchClick = () => {
-    dispatch(toggleGptSearch());
-    //It doesn't matter what position we are in,
-    //We need to enter search page with empty list
-    //And we need to take exit by emptying the list
-    dispatch(clearMovieSearchResults());
-  };
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -35,6 +28,8 @@ const Header = () => {
         navigate("/error");
       });
     dispatch(resetSearch());
+    dispatch(clearMovieSearchResults());
+    dispatch(resetMovieDetails());
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -72,19 +67,36 @@ const Header = () => {
       {user && (
         <div className="flex">
           <button
-            className=" md:h-10 h-6 md:py-2 my-auto rounded-lg transition-all ease-in-out delay-70 duration-300 hover:scale-95"
-            onClick={handleSearchClick}
+            className=" md:h-10 h-6 md:py-2 my-auto mx-4 transition-all ease-in-out delay-70 duration-300 hover:scale-95"
+            onClick={() => {
+              // to reset the entire gptSlice
+              dispatch(resetSearch());
+              dispatch(clearMovieSearchResults());
+              // to reset the entire movieInfo Slice
+              dispatch(resetMovieDetails());
+            }}
           >
-            {showGptSearch ? (
-              <h1 className="text-white font-semibold md:text-base text-xs">
-                Home
-              </h1>
-            ) : (
-              <img className="w-6" src={searchBtn} alt="Search Button" />
-            )}
+            <h1 className="text-white font-semibold md:text-base text-xs">
+              Home
+            </h1>
+          </button>
+          <button
+            className=" md:h-10 h-6 md:py-2 my-auto transition-all ease-in-out delay-70 duration-300 hover:scale-95"
+            onClick={() => {
+              //It doesn't matter what position we are in,
+              //We need to enter search page with empty list
+              //And we need to take exit by emptying the list
+              dispatch(toggleGptSearch());
+              dispatch(resetMovieDetails());
+            }}
+          >
+            {/* <img className="w-6" src={searchBtn} alt="Search Button" /> */}
+            <h1 className="text-white font-semibold md:text-base text-xs">
+              Search
+            </h1>
           </button>
           <div className="flex p-2 md:m-2  rounded-lg">
-            <p className="mr-2 font-bold text-white text-xs my-auto">
+            <p className="mr-2 font-bold text-white md:text-base text-xs my-auto">
               {user.displayName}
             </p>
             <button

@@ -1,5 +1,5 @@
 import Header from "./Header";
-import netflixBg from "../assets/netflixBg.jpg";
+import flixipediaBg from "../assets/flixipediaBg.jpg";
 import { useRef, useState } from "react";
 import { checkValidData } from "../utils/checkValidData";
 import {
@@ -95,7 +95,7 @@ const Login = () => {
       <Header />
       <img
         className="fixed h-screen md:w-screen object-cover "
-        src={netflixBg}
+        src={flixipediaBg}
         alt="Background Img"
       />
       <form

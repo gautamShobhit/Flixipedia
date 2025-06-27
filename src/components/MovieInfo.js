@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { API_OPTIONS } from "../utils/constants";
 import { useEffect } from "react";
-import netflixBg from "../assets/netflixBg.jpg";
+import flixipediaBg from "../assets/flixipediaBg.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addCastInfo,
@@ -59,11 +59,13 @@ const MovieInfo = () => {
       <div className="md:w-screen h-screen object-cover z-10 fixed inset-0 bg-black bg-opacity-40 "></div>
       <img
         className="md:w-screen h-screen object-cover fixed "
-        src={netflixBg}
+        src={flixipediaBg}
         alt="Background Img"
       />
-      <MovieVideoBg poster={poster_path} trailer={trailer} />
-      <MovieDetails details={movieDetails} />
+      <div className="md:mt-0 mt-[10%]">
+        <MovieVideoBg poster={poster_path} trailer={trailer} />
+        <MovieDetails details={movieDetails} />
+      </div>
     </div>
   );
 };

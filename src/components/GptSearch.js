@@ -1,4 +1,4 @@
-import netflixBg from "../assets/netflixBg.jpg";
+import flixipediaBg from "../assets/flixipediaBg.jpg";
 import MovieSuggestions from "./MovieSuggestions";
 import SearchBar from "./SearchBar";
 const GptSearch = () => {
@@ -7,7 +7,7 @@ const GptSearch = () => {
       <div className="md:w-screen h-screen object-cover z-10 fixed inset-0 bg-black bg-opacity-40"></div>
       <img
         className="md:w-screen h-screen object-cover fixed -z-10"
-        src={netflixBg}
+        src={flixipediaBg}
         alt="Background Img"
       />
       {

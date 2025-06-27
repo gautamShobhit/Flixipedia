@@ -1,4 +1,4 @@
-import netflixLogo from "../assets/netflixLogo.jpg";
+import flixipediaLogo from "../assets/flixipediaLogo.jpg";
 import signOutLogo from "../assets/signOutLogo.jpg";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebaseConfig";
@@ -31,6 +31,13 @@ const Header = () => {
     dispatch(clearMovieSearchResults());
     dispatch(resetMovieDetails());
   };
+  const handleHomeBtnClick = () => {
+    // to reset the entire gptSlice
+    dispatch(resetSearch());
+    dispatch(clearMovieSearchResults());
+    // to reset the entire movieInfo Slice
+    dispatch(resetMovieDetails());
+  };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -58,9 +65,10 @@ const Header = () => {
     <div className="w-full top-0 left-0 items-center z-20 absolute flex justify-between bg-gradient-to-b from-black ">
       <div className="md:p-4 p-2">
         <img
-          className="md:ml-8 md:w-40 w-24 transition-all delay-100 ease-in-out duration-300 hover:scale-95"
-          src={netflixLogo}
+          className="md:ml-8 md:w-40 w-24 transition-all delay-75 ease-in-out duration-300 hover:scale-95 hover:cursor-pointer"
+          src={flixipediaLogo}
           alt="logo"
+          onClick={handleHomeBtnClick}
         />
       </div>
 
@@ -68,13 +76,7 @@ const Header = () => {
         <div className="flex">
           <button
             className=" md:h-10 h-6 md:py-2 my-auto mx-4 transition-all ease-in-out delay-70 duration-300 hover:scale-95"
-            onClick={() => {
-              // to reset the entire gptSlice
-              dispatch(resetSearch());
-              dispatch(clearMovieSearchResults());
-              // to reset the entire movieInfo Slice
-              dispatch(resetMovieDetails());
-            }}
+            onClick={handleHomeBtnClick}
           >
             <h1 className="text-white font-semibold md:text-base text-xs">
               Home
@@ -92,7 +94,7 @@ const Header = () => {
           >
             {/* <img className="w-6" src={searchBtn} alt="Search Button" /> */}
             <h1 className="text-white font-semibold md:text-base text-xs">
-              Search
+              Discover
             </h1>
           </button>
           <div className="flex p-2 md:m-2  rounded-lg">

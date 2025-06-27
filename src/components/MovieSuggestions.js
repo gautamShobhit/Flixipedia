@@ -9,9 +9,12 @@ const MovieSuggestions = () => {
     <Shimmer />
   ) : (
     <div className=" pt-4  flex flex-wrap justify-center">
-      {movieList?.map((movie) => (
-        <MovieTile key={movie?.id} movieInfo={movie} />
-      ))}
+      {movieList?.map(
+        (movie) =>
+          // here movie could be null for some broken API
+          // hence we need to pass a check first and then render each movie tile
+          movie && <MovieTile key={movie?.original_title} movieInfo={movie} />
+      )}
     </div>
   );
 };

@@ -7,6 +7,7 @@ const movieInfoSlice = createSlice({
     movieDetails: [],
     trailerVideo: [],
     castInfo: [],
+    movieReviews: [],
   },
   reducers: {
     addMovieDetails: (state, action) => {
@@ -22,12 +23,16 @@ const movieInfoSlice = createSlice({
       state.movieDetails = [];
       state.trailerVideo = [];
       state.castInfo = [];
+      state.movieReviews = [];
     },
     addTrailer: (state, action) => {
       state.trailerVideo = action.payload;
     },
     addCastInfo: (state, action) => {
       state.castInfo = action.payload;
+    },
+    addMovieReviews: (state, action) => {
+      state.movieReviews = action.payload;
     },
   },
 });
@@ -37,5 +42,6 @@ export const {
   resetMovieDetails,
   addTrailer,
   addCastInfo,
+  addMovieReviews,
 } = movieInfoSlice.actions;
 export default movieInfoSlice.reducer;

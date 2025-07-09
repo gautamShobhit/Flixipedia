@@ -6,9 +6,9 @@ const VideoBg = ({ movieId }) => {
   useMovieTrailer(movieId);
 
   return (
-    <div className="w-screen">
+    <div className="absolute inset-0 z-0 overflow-hidden">
       <iframe
-        className="w-screen aspect-video"
+        className="w-full h-full md:scale-[1.1] scale-[1.8] object-cover"
         //   Optional chaining mein phs gya tha.....
         src={
           "https://www.youtube.com/embed/" +

@@ -5,7 +5,7 @@ import VideoBg from "./VideoBg";
 
 const MainContainer = () => {
   //Since we need to build a vdo title and a vdo bg
-  const movies = useSelector((store) => store.movies?.upcomingMovies);
+  const movies = useSelector((store) => store.movies?.nowPlayingMovies);
   //There could be case when "movies" is empty
   //AKA early return -> It prevents our code fetchinh movies when it is null
   if (!movies) return;
@@ -15,7 +15,7 @@ const MainContainer = () => {
   const mainMovie = movies[dayOfMonth % 20];
   const { original_title, overview, id } = mainMovie;
   return (
-    <div className="overflow-x-hidden">
+    <div className="relative overflow-x-hidden md:h-fit h-[400px] w-screen aspect-video ">
       <VideoTitle title={original_title} overview={overview} id={id} />
       <VideoBg movieId={id} />
     </div>

@@ -7,10 +7,10 @@ const VideoTitle = ({ title, overview, id }) => {
   const dispatch = useDispatch();
   return (
     // w-screen was causing overflow in x-axis
-    <div className="overflow-x-hidden w-full aspect-video md:pt-72 pt-[20%] md:pl-24 pl-8 absolute text-white bg-gradient-to-r from-black  ">
-      <div className="overflow-x-hidden absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent "></div>
-      <div className="absolute">
-        <h1 className="md:text-4xl text-[14px] font-bold md:mb-4 mb-2 md:w-1/3 w-3/5">
+    <div className="z-10 relative overflow-x-hidden w-screen md:h-fit h-[400px] aspect-video md:pt-72 pt-[35%] md:pl-24 pl-8  text-white bg-gradient-to-r from-black  ">
+      <div className="overflow-hidden absolute inset-0 bg-gradient-to-t from-black "></div>
+      <div className="relative">
+        <h1 className="md:text-4xl text-[16px] font-bold md:mb-4 mb-2 md:w-1/3 w-3/5">
           {title}
         </h1>
         <p className="hidden md:block md:w-1/3 w-2/4 mb-4 md:text-base text-xs ">
@@ -27,7 +27,7 @@ const VideoTitle = ({ title, overview, id }) => {
               dispatch(resetSearch());
             }}
           >
-            <button className="md:w-40 w-20 p-2 font-semibold md:text-lg text-[8px] bg-white text-white bg-opacity-30 rounded-lg transition-all ease-in-out delay-75 duration-200 hover:scale-95">
+            <button className="md:w-40 w-20 p-2 font-semibold md:text-lg text-[12px] bg-white text-white bg-opacity-30 rounded-lg transition-all ease-in-out delay-75 duration-200 hover:scale-95">
               More Info
             </button>
           </Link>

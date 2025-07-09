@@ -12,7 +12,7 @@ import {
   toggleGptSearch,
 } from "../utils/gptSlice";
 // import searchBtn from "../assets/searchBtn.jpg";
-import { resetMovieDetails, toggleIsMoviePage } from "../utils/movieInfoSlice";
+import { resetMovieDetails } from "../utils/movieInfoSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="w-full top-0 left-0 items-center z-20 absolute flex justify-between bg-gradient-to-b from-black ">
+    <div className="w-full top-0 left-0 items-center z-20 absolute flex justify-between bg-gradient-to-b from-black to-transparent   ">
       <div className="md:p-4 p-2">
         <img
           className="md:ml-8 md:w-40 w-24 transition-all delay-75 ease-in-out duration-300 hover:scale-95 hover:cursor-pointer"
@@ -73,14 +73,12 @@ const Header = () => {
       </div>
 
       {user && (
-        <div className="flex">
+        <div className="flex md:text-base text-sm">
           <button
             className=" md:h-10 h-6 md:py-2 my-auto mx-4 transition-all ease-in-out delay-70 duration-300 hover:scale-95"
             onClick={handleHomeBtnClick}
           >
-            <h1 className="text-white font-semibold md:text-base text-xs">
-              Home
-            </h1>
+            <h1 className="text-white font-semibold ">Home</h1>
           </button>
           <button
             className=" md:h-10 h-6 md:py-2 my-auto transition-all ease-in-out delay-70 duration-300 hover:scale-95"
@@ -93,12 +91,10 @@ const Header = () => {
             }}
           >
             {/* <img className="w-6" src={searchBtn} alt="Search Button" /> */}
-            <h1 className="text-white font-semibold md:text-base text-xs">
-              Discover
-            </h1>
+            <h1 className="text-white font-semibold ">Discover</h1>
           </button>
           <div className="flex p-2 md:m-2  rounded-lg">
-            <p className="mr-2 font-bold text-white md:text-base text-xs my-auto">
+            <p className="mr-2 font-bold text-white  my-auto">
               {user.displayName}
             </p>
             <button

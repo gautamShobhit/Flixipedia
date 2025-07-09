@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addCastInfo,
   addMovieDetails,
+  addMovieReviews,
   addTrailer,
 } from "../utils/movieInfoSlice";
 import MovieVideoBg from "./MovieVideoBg";
@@ -15,6 +16,7 @@ const MovieInfo = () => {
   const { movieId } = useParams();
   const trailer = useSelector((store) => store.movieInfo?.trailerVideo);
   const movieDetails = useSelector((store) => store.movieInfo?.movieDetails);
+  const movieReviews = useSelector((store) => store.movieInfo?.movieReviews);
   const { poster_path } = movieDetails;
   const dispatch = useDispatch();
   const getMovieDetails = async () => {
@@ -48,10 +50,19 @@ const MovieInfo = () => {
     const json = await data.json();
     dispatch(addCastInfo(json.cast));
   };
+  const getMovieReviews = async () => {
+    const data = await fetch(
+      "https://api.themoviedb.org/3/movie/" + movieId + "/reviews",
+      API_OPTIONS
+    );
+    const json = await data.json();
+    dispatch(addMovieReviews(json.results));
+  };
   useEffect(() => {
     getMovieDetails();
     getMovieTrailer();
     getCastInfo();
+    getMovieReviews();
   }, [movieId]);
 
   return (
@@ -64,7 +75,7 @@ const MovieInfo = () => {
       />
       <div className="md:mt-0 mt-[10%]">
         <MovieVideoBg poster={poster_path} trailer={trailer} />
-        <MovieDetails details={movieDetails} />
+        <MovieDetails details={movieDetails} reviews={movieReviews} />
       </div>
     </div>
   );

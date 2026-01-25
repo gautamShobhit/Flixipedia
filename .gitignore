@@ -24,3 +24,6 @@ yarn-error.log*
 
 #secret api keys
 .env
+
+.vercel
+.env*.local

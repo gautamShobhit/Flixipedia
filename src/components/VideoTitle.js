@@ -7,10 +7,15 @@ const VideoTitle = ({ title, overview, id }) => {
   const dispatch = useDispatch();
   return (
     // w-screen was causing overflow in x-axis
-    <div className="z-10 relative overflow-x-hidden w-screen md:h-fit h-[400px] aspect-video md:pt-72 pt-[35%] md:pl-24 pl-8  text-white bg-gradient-to-r from-black  ">
-      <div className="overflow-hidden absolute inset-0 bg-gradient-to-t from-black "></div>
+    <div className="z-10 relative overflow-x-hidden w-screen md:h-fit h-[400px] aspect-video md:pt-72 pt-[40%] md:pl-24 pl-4  text-white  ">
+      <div className="absolute inset-0">
+        <div className="h-full md:w-full w-1/2 overflow-hidden bg-gradient-to-r from-black to-transparent "></div>
+      </div>
+      <div className="absolute inset-0">
+        <div className="h-1/2 md:h-full overflow-hidden bg-gradient-to-t from-black to-transparent translate-y-full md:translate-y-0"></div>
+      </div>
       <div className="relative">
-        <h1 className="md:text-4xl text-[16px] font-bold md:mb-4 mb-2 md:w-1/3 w-3/5">
+        <h1 className="md:text-4xl text-[16px] font-bold md:mb-4 mb-2 md:w-1/3 w-3/5 ">
           {title}
         </h1>
         <p className="hidden md:block md:w-1/3 w-2/4 mb-4 md:text-base text-xs ">

@@ -7,7 +7,7 @@ const MainContainer = () => {
   //Since we need to build a vdo title and a vdo bg
   const movies = useSelector((store) => store.movies?.nowPlayingMovies);
   //There could be case when "movies" is empty
-  //AKA early return -> It prevents our code fetchinh movies when it is null
+  //AKA early return -> It prevents our code fetching movies when it is null
   if (!movies) return;
 
   const currentDate = new Date();

@@ -9,6 +9,7 @@ import GptSearch from "./GptSearch";
 import { useSelector } from "react-redux";
 
 import { Outlet } from "react-router-dom";
+import ScrollToTop from "./ScrollToTop";
 
 const Browse = () => {
   //Makes API call for movies and dispatch action to add movies list in slice
@@ -23,6 +24,7 @@ const Browse = () => {
 
   return (
     <div className="overflow-x-hidden">
+      <ScrollToTop />
       <Header />
       {isMoviePage ? (
         <Outlet />

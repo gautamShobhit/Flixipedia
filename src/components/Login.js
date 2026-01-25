@@ -17,9 +17,13 @@ const Login = () => {
   const dispatch = useDispatch();
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [passwordTips, setPasswordTips] = useState(false);
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
+  const handleTipsClick = () => {
+    setPasswordTips(!passwordTips);
+  };
   const handleBtnClick = () => {
     const msg = checkValidData(email.current.value, password.current.value);
     setErrorMsg(msg);
@@ -100,7 +104,7 @@ const Login = () => {
       />
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="md:p-10 z-10 p-4 md:w-1/4 w-3/4 md:mt-48 mx-auto mt-20 left-0 right-0 absolute bg-gray-600 bg-opacity-50 rounded-lg"
+        className="md:p-10 z-10 p-4 md:w-1/4 w-3/4 md:mt-32 mx-auto mt-20 left-0 right-0 absolute bg-gray-600 bg-opacity-50 rounded-lg"
       >
         <h1 className="md:mb-8 mb-4 md:text-4xl text-lg text-white font-bold ">
           {isSignIn ? "Sign In" : "Sign Up"}
@@ -115,19 +119,40 @@ const Login = () => {
         )}
         <input
           ref={email}
-          className="md:p-3 p-2 md:mb-4 mb-2 border border-gray-400 rounded-lg w-full bg-gray-700 bg-opacity-50 text-white"
+          className="md:p-3 p-2  mb-4 border border-gray-400 rounded-lg w-full bg-gray-700 bg-opacity-50 text-white"
           type="text"
           placeholder="E-mail"
         />
         <input
           ref={password}
-          className="md:p-3 p-2 md:mb-4 mb-2 border border-gray-400 rounded-lg w-full  bg-gray-700 bg-opacity-50 text-white"
+          className="md:p-3 p-2 mb-2 border border-gray-400 rounded-lg w-full  bg-gray-700 bg-opacity-50 text-white"
           type="password"
           placeholder="Password"
         />
-        <p className="mb-4 text-red-500 font-semibold text-lg">{errorMsg}</p>
+        <p className=" text-red-500 font-semibold md:text-lg text-sm mb-2 ">
+          {errorMsg}
+        </p>
+        {!isSignIn && (
+          <div
+            className="text-white md:text-sm text-xs border border-gray-400 rounded-lg p-2 w-full hover:cursor-pointer"
+            onClick={handleTipsClick}
+          >
+            <div className="flex justify-between">
+              <h1>Tips for setting up your password</h1>{" "}
+              {passwordTips ? "👆" : "👇"}
+            </div>
+
+            {passwordTips && (
+              <ul className="pt-2 pl-6 list-disc ">
+                <li>Mix uppercase/lowercase letters</li>
+                <li>It should be alphanumeric</li>
+                <li>Include at least one symbol</li>
+              </ul>
+            )}
+          </div>
+        )}
         <button
-          className="p-3 mb-4 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 w-full"
+          className="md:mt-4 mt-2 p-3 mb-4 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 w-full"
           onClick={handleBtnClick}
         >
           {isSignIn ? "Sign In" : "Sign Up"}

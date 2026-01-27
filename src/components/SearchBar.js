@@ -11,34 +11,42 @@ import { addMovieSearchResults } from "../utils/gptSlice";
  * - Clear user feedback
  */
 const SearchBar = () => {
+  // Initialize Redux dispatch for sending actions to the store
   const dispatch = useDispatch();
+  // Create a ref for direct access to the search input element
   const inputRef = useRef(null);
 
-  // UI state
+  // UI state for managing loading status and displaying messages to the user
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
 
-  // Performance optimizations
+  // Performance optimizations: tracking last request time for debouncing and a cache for search results
   const lastRequestTimeRef = useRef(0);
-  const searchCacheRef = useRef({}); // query -> movieList
+  // Caches movie search results to avoid redundant API calls for the same query
+  const searchCacheRef = useRef({}); // Stores query -> movieList mapping
 
   // ---- CONSTANTS (easy to tweak later) ----
   const DEBOUNCE_TIME = 3000;
 
   /**
-   * Fetch movie details from TMDB for a given movie name
+   * Fetches movie details from The Movie Database (TMDB) API.
+   * Retrieves only the first result to avoid duplicates.
+   * @param {string} movieName - The name of the movie to search for.
+   * @returns {Promise<object|null>} A promise that resolves to the first movie object from TMDB, or null if not found.
    */
   const fetchFromTMDB = async (movieName) => {
     const response = await fetch(
       `https://api.themoviedb.org/3/search/movie?query=${movieName}&include_adult=false&language=en-US&page=1`,
-      API_OPTIONS
+      API_OPTIONS,
     );
     const data = await response.json();
-    return data.results;
+    return data.results?.[0]; // Return only the first result
   };
 
   /**
-   * Main AI-powered search handler
+   * Handles the main AI-powered movie search logic.
+   * Includes client-side caching, debouncing, and rate-limit handling for a smooth user experience.
+   * Dispatches the final list of unique movies with AI-generated reasons to the Redux store.
    */
   const handleSearch = async () => {
     const query = inputRef.current.value.trim();
@@ -66,40 +74,55 @@ const SearchBar = () => {
       setLoading(true);
       setStatusMessage("✨ Finding the perfect movies for you...");
 
+      // Construct the API endpoint for Gemini movie recommendations.
       const response = await fetch(
-        `/api/generateMovies?query=${encodeURIComponent(query)}`
+        `/api/generateMovies?query=${encodeURIComponent(query)}`,
       );
 
+      // Handle API response errors, specifically rate limiting (429) and other server errors.
       if (!response.ok) {
         if (response.status === 429) {
           setStatusMessage("🚫 Too many requests. Please slow down a bit.");
         } else {
-          setStatusMessage(`❌ API error: ${response.status} ${response.statusText}. Please try again.`);
+          setStatusMessage(
+            `❌ API error: ${response.status} ${response.statusText}. Please try again.`,
+          );
         }
         return;
       }
 
+      // Extract movie titles and AI provider from the Gemini API response.
       const { movies = [], provider = "unknown" } = await response.json();
 
-      // Fetch TMDB details for each AI-recommended movie
-      const tmdbResults = await Promise.all(
-        movies.map((movie) => fetchFromTMDB(movie))
+      // For each movie recommended by AI, fetch its details from TMDB and attach the AI-generated reason.
+      const tmdbResultsWithReason = await Promise.all(
+        movies.map(async ({ title, reason }) => {
+          const result = await fetchFromTMDB(title); // Assuming fetchFromTMDB now returns a single best result or null
+          // If a TMDB result is found, combine it with the AI's reason.
+          return result ? { ...result, aiReason: reason } : null;
+        }),
       );
 
-      // Pick the most relevant result per movie
-      const finalMovieList = tmdbResults.map(
-        (results) => results?.[0]
-      );
+      // Filter out any null results (movies not found on TMDB) and ensure uniqueness based on movie ID.
+      const uniqueMovies = new Map();
+      tmdbResultsWithReason.filter(Boolean).forEach((movie) => {
+        if (!uniqueMovies.has(movie.id)) {
+          uniqueMovies.set(movie.id, movie);
+        }
+      });
+      const finalMovieList = Array.from(uniqueMovies.values());
 
-      // ---- CACHE RESULT ----
+      // Cache the final list of unique movies to improve performance for subsequent identical searches.
       searchCacheRef.current[cacheKey] = finalMovieList;
 
+      // Dispatch the final, curated list of movie results to the Redux store.
       dispatch(addMovieSearchResults(finalMovieList));
 
+      // Set a status message indicating the AI model used for the recommendations.
       setStatusMessage(
         provider === "fallback"
           ? "⚠️ Using Groq (Alternate AI model)"
-          : "🎬 Results provided by Gemini"
+          : "🎬 Results provided by Gemini",
       );
     } catch (error) {
       console.error("Search failed:", error);
@@ -111,10 +134,12 @@ const SearchBar = () => {
 
   return (
     <div className="flex flex-col items-center justify-center ">
+      {/* Search input form */}
       <form
         onSubmit={(e) => e.preventDefault()}
         className="flex justify-between md:m-0 m-4 p-4 md:w-3/5 w-screen bg-black bg-opacity-70 rounded-lg border-b border-white shadow-md shadow-red-400"
       >
+        {/* Input field for movie search query */}
         <input
           ref={inputRef}
           type="text"
@@ -123,6 +148,7 @@ const SearchBar = () => {
           className="md:text-base text-xs w-10/12 p-2 mr-2 rounded-lg bg-gray-900 text-white font-bold border border-gray-400"
         />
 
+        {/* Search button */}
         <button
           onClick={handleSearch}
           disabled={loading}
@@ -136,10 +162,9 @@ const SearchBar = () => {
         </button>
       </form>
 
+      {/* Display status messages to the user (e.g., loading, errors, cache hits) */}
       {statusMessage && (
-        <p className="mt-2 text-sm italic text-gray-300">
-          {statusMessage}
-        </p>
+        <p className="mt-2 text-sm italic text-gray-300">{statusMessage}</p>
       )}
     </div>
   );

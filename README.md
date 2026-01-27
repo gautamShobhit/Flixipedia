@@ -1,70 +1,90 @@
-# Getting Started with Create React App
+# Flixipedia - AI-Powered Movie Recommendation Engine
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Overview
 
-## Available Scripts
+Flixipedia is a cutting-edge movie recommendation platform that leverages the power of AI (specifically Google Gemini and Groq) to provide personalized movie suggestions. Users can simply type in a prompt describing their mood, preferences, or any specific criteria, and Flixipedia will generate a list of recommended movies along with a brief reason for each suggestion. The application integrates with The Movie Database (TMDB) to fetch comprehensive movie details, including posters, plot summaries, release dates, and ratings.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **AI-Powered Recommendations:** Get personalized movie suggestions based on natural language prompts using Gemini AI and Groq.
+- **Detailed Movie Information:** View comprehensive details for each recommended movie, including poster, title, overview, release date, and average ratings from TMDB.
+- **Recommendation Reasons:** Understand _why_ a movie is recommended with a concise AI-generated reason.
+- **Responsive Search Interface:** A user-friendly and responsive search bar with debouncing, client-side caching, and graceful rate-limit handling for a smooth experience.
+- **Redux for State Management:** Efficient and predictable state management using Redux Toolkit.
+- **Fallback AI Provider:** Seamlessly switches to Groq if the primary Gemini AI service encounters issues.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Technologies Used
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Frontend:**
+  - React.js
+  - Redux Toolkit (for state management)
+  - Tailwind CSS (for styling)
+  - React Router DOM (for navigation)
+- **Backend (API Route):**
+  - Node.js
+  - Google Gemini API (Primary AI model)
+  - Groq API (Fallback AI model)
+  - The Movie Database (TMDB) API
 
-### `npm test`
+## Setup Instructions
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Follow these steps to get Flixipedia up and running on your local machine:
 
-### `npm run build`
+### 1. Clone the Repository
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+git clone <your-repository-url>
+cd FLIXIPEDIA
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 2. Install Dependencies
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm install
+# or
+yarn install
+```
 
-### `npm run eject`
+### 3. Obtain API Keys
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Flixipedia requires API keys for the following services:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Google Gemini API:** Obtain your API key from the [Google AI Studio](https://ai.google.dev/).
+- **Groq API:** Obtain your API key from the [Groq Console](https://console.groq.com/).
+- **The Movie Database (TMDB) API:** Register for an API key on the [TMDB website](https://developers.themoviedb.org/3/getting-started/introduction).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 4. Configure Environment Variables
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Create a `.env` file in the root of your project and add the following environment variables:
 
-## Learn More
+```
+VITE_TMDB_KEY="YOUR_TMDB_API_KEY"
+VITE_APP_GEMINI_KEY="YOUR_GEMINI_API_KEY"
+VITE_APP_GROQ_KEY="YOUR_GROQ_API_KEY"
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Replace `"YOUR_TMDB_API_KEY"`, `"YOUR_GEMINI_API_KEY"`, and `"YOUR_GROQ_API_KEY"` with your actual API keys.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 5. Run the Application
 
-### Code Splitting
+```bash
+npm start
+# or
+yarn start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The application will typically open in your browser at `http://localhost:3000`.
 
-### Analyzing the Bundle Size
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1.  **Enter a Movie Prompt:** In the search bar, type a description of the movies you're looking for (e.g., "action movies with a strong female lead," "sci-fi thrillers from the 90s," "feel-good romantic comedies").
+2.  **View Recommendations:** The AI will process your request and display a list of recommended movies with a brief explanation for each.
+3.  **Explore Movie Details:** Click on any movie tile to view more detailed information about that movie from TMDB.
 
-### Making a Progressive Web App
+## Future Enhancements (Optional)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- User authentication and personalized watchlists.
+- Advanced filtering and sorting options for recommendations.
+- Integration with other movie streaming services.
+- Ability to rate movies and provide feedback to improve AI recommendations.
+- Dark mode/light mode toggle.

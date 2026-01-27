@@ -3,18 +3,33 @@ import { IMG_CDN_URL } from "../utils/constants";
 import { toggleIsMoviePage } from "../utils/movieInfoSlice";
 import { Link } from "react-router-dom";
 import { resetSearch } from "../utils/gptSlice";
+import { useState } from "react";
 
+/**
+ * `MovieTile` Component
+ * Displays a single movie as a tile, including its poster, title, plot, ratings, and an AI-generated reason for recommendation.
+ * Allows navigation to a detailed movie page and handles Redux state updates for search and movie page views.
+ * @param {object} props - The component's properties.
+ * @param {object} props.movieInfo - An object containing details about the movie.
+ */
 const MovieTile = ({ movieInfo }) => {
+  // Initialize Redux dispatch for sending actions to the store.
   const dispatch = useDispatch();
-  //destructure this info
+
+  // Destructure movie details from movieInfo prop for easier access.
   const {
-    id,
-    original_title,
-    overview,
-    poster_path,
-    vote_average,
-    release_date,
+    id, // Unique identifier for the movie
+    original_title, // Original title of the movie
+    overview, // Plot summary of the movie
+    poster_path, // Path to the movie's poster image
+    vote_average, // Average vote score from TMDB
+    release_date, // Release date of the movie
+    aiReason, // AI-generated reason for recommending the movie
   } = movieInfo;
+
+  // State to control the visibility of the AI recommendation reason.
+  const [isReason, setIsReason] = useState(false);
+
   return (
     <div className="group flex text-gray-300 border-b border-white shadow-lg shadow-red-400 rounded-lg md:w-5/12 w-full mx-4 my-4 md:mx-8 md:h-80 h-48 bg-black bg-opacity-80 transition-all ease-in-out duration-200 delay-75 hover:scale-105 ">
       <div className=" w-2/6 flex justify-center p-2 relative ">
@@ -51,6 +66,35 @@ const MovieTile = ({ movieInfo }) => {
         <p className=" md:text-sm text-xs font-semibold md:m-4 m-2">
           Avg. Ratings : {vote_average?.toFixed(1)}/10 ⭐
         </p>
+        <div
+          className="border border-gray-400 md:text-sm text-xs font-semibold md:m-4 m-2 p-2 mt-4 rounded-lg text-center cursor-pointer select-none"
+          onClick={() => setIsReason(!isReason)}
+        >
+          <h1 className="flex justify-between">
+            Why this movie? ✨
+            <span
+              className={` ml-2 transition-transform duration-300 ease-in-out ${
+                isReason ? "rotate-180" : "rotate-0"
+              }`}
+            >
+              ▼
+            </span>
+          </h1>
+          <div
+            className={`overflow-hidden transition-[max-height,opacity] duration-500 ease-in-out ${
+              isReason ? "max-h-32 opacity-100 mt-2" : "max-h-0 opacity-0"
+            }`}
+            style={{
+              // allow long reasons to animate nicely, tweak as needed
+              maxHeight: isReason ? "12rem" : "0",
+            }}
+            aria-expanded={isReason}
+          >
+            <p className="md:text-sm text-xs font-normal text-left">
+              {aiReason}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

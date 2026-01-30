@@ -137,7 +137,7 @@ const SearchBar = () => {
       {/* Search input form */}
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="flex justify-between md:m-0 m-4 p-4 md:w-3/5 w-screen bg-black bg-opacity-70 rounded-lg border-b border-white shadow-md shadow-red-400"
+        className="flex justify-between md:m-0 m-4 p-4 md:w-3/5 w-screen bg-gray-800 bg-opacity-70 rounded-lg border-b border-white shadow-md shadow-red-400"
       >
         {/* Input field for movie search query */}
         <input

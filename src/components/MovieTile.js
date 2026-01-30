@@ -90,7 +90,7 @@ const MovieTile = ({ movieInfo }) => {
             }}
             aria-expanded={isReason}
           >
-            <p className="md:text-sm text-xs font-normal text-left">
+            <p className="md:text-sm text-xs font-normal text-right">
               {aiReason}
             </p>
           </div>

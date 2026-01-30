@@ -77,7 +77,7 @@ export default async function handler(req, res) {
      * Instructs the model to return 10 movie titles, each with a brief reason,
      * formatted as a comma-separated string without numbering or extra text.
      */
-    const prompt = `You are a movie recommendation system.\n    Recommend movies based on this query: "${query}".\n    For each of the top 10 movies, return the movie title followed by a brief reason for recommending it.\n    Format your response as:\n    Movie Title 1: Brief reason here, Movie Title 2: Brief reason here, ... up to 10 movies.\n    Do not number the movies and do not include any explanations or extra text outside this format.`;
+    const prompt = `You are a movie recommendation system.\n    Recommend movies based on this query: "${query}".\n    For each of the top 10 movies, return the movie title followed by a comprehensive reason for recommending it.\n    Format your response as:\n    Movie Title 1: Comprehensive reason here ### Movie Title 2: Comprehensive reason here ### ... up to 10 movies.\n    Do not number the movies and do not include any explanations or extra text outside this format.`;
 
     let moviesText = ""; // Stores the raw text response from the AI model
     let provider = "gemini"; // Tracks which AI provider was used (default: Gemini)
@@ -112,7 +112,7 @@ export default async function handler(req, res) {
           body: JSON.stringify({
             model: "llama-3.1-8b-instant", // Specify the Groq model to use
             messages: [{ role: "user", content: prompt }],
-            max_tokens: 200,
+            max_tokens: 500,
           }),
         },
       );
@@ -125,7 +125,7 @@ export default async function handler(req, res) {
     // Parses the raw text response from the AI into an array of movie objects
     // The expected format is: "Movie Title 1: Brief reason here, Movie Title 2: Brief reason here, ..."
     const movies = moviesText
-      .split(",") // Split the string by comma to get individual movie entries
+      .split("###") // Split the string by "###" to get individual movie entries
       .map((entry) => {
         const lastColonIndex = entry.lastIndexOf(":");
         if (lastColonIndex === -1) return null; // No colon found, invalid format

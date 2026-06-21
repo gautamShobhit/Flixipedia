@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { API_OPTIONS } from "../utils/constants";
 import { addMovieSearchResults } from "../utils/gptSlice";
 
 /**
@@ -36,8 +35,7 @@ const SearchBar = () => {
    */
   const fetchFromTMDB = async (movieName) => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${movieName}&include_adult=false&language=en-US&page=1`,
-      API_OPTIONS,
+      `/api/tmdb?path=/search/movie&query=${movieName}&include_adult=false&language=en-US&page=1`,
     );
     const data = await response.json();
     return data.results?.[0]; // Return only the first result

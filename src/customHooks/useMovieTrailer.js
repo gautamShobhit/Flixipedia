@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { API_OPTIONS } from "../utils/constants";
 import { addTrailerVideos, clearTrailerVideo } from "../utils/moviesSlice";
 import { useEffect } from "react";
 
@@ -12,14 +11,11 @@ const useMovieTrailer = (movieId) => {
   const getMovieVideos = async () => {
     dispatch(clearTrailerVideo());
     const data = await fetch(
-      "https://api.themoviedb.org/3/movie/" +
-        movieId +
-        "/videos?language=en-US",
-      API_OPTIONS
+      `/api/tmdb?path=/movie/${movieId}/videos&language=en-US`,
     );
     const json = await data.json();
     const filteredData = json.results.filter(
-      (videos) => videos.type === "Trailer"
+      (videos) => videos.type === "Trailer",
     );
     //There may be cases when trailer of a movie has not been released yet,
     //In such cases, display teaser of that movie

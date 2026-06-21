@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { API_OPTIONS } from "../utils/constants";
 import { useEffect } from "react";
 import flixipediaBg from "../assets/flixipediaBg.jpg";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,22 +19,16 @@ const MovieInfo = () => {
   const { poster_path } = movieDetails;
   const dispatch = useDispatch();
   const getMovieDetails = async () => {
-    const data = await fetch(
-      "https://api.themoviedb.org/3/movie/" + movieId,
-      API_OPTIONS
-    );
+    const data = await fetch("/api/tmdb?path=/movie/" + movieId);
     const json = await data.json();
 
     dispatch(addMovieDetails(json));
   };
   const getMovieTrailer = async () => {
-    const data = await fetch(
-      "https://api.themoviedb.org/3/movie/" + movieId + "/videos",
-      API_OPTIONS
-    );
+    const data = await fetch("/api/tmdb?path=/movie/" + movieId + "/videos");
     const json = await data.json();
     const filteredData = json.results.filter(
-      (videos) => videos.type === "Trailer"
+      (videos) => videos.type === "Trailer",
     );
     const trailerVideo = filteredData.length
       ? filteredData[0]
@@ -43,18 +36,12 @@ const MovieInfo = () => {
     dispatch(addTrailer(trailerVideo));
   };
   const getCastInfo = async () => {
-    const data = await fetch(
-      "https://api.themoviedb.org/3/movie/" + movieId + "/credits",
-      API_OPTIONS
-    );
+    const data = await fetch("/api/tmdb?path=/movie/" + movieId + "/credits");
     const json = await data.json();
     dispatch(addCastInfo(json.cast));
   };
   const getMovieReviews = async () => {
-    const data = await fetch(
-      "https://api.themoviedb.org/3/movie/" + movieId + "/reviews",
-      API_OPTIONS
-    );
+    const data = await fetch("/api/tmdb?path=/movie/" + movieId + "/reviews");
     const json = await data.json();
     dispatch(addMovieReviews(json.results));
   };

@@ -1,13 +1,18 @@
-import { IMG_CDN_URL } from "../utils/constants";
+import { POSTER_CDN_URL } from "../utils/constants";
 
 const MovieCard = ({ movie }) => {
   const moviePoster = movie.poster_path;
+
+  // Early return if no poster exists to prevent broken image icons
+  if (!moviePoster) return null;
+
   return (
     <div className="md:ml-4 ml-2 md:w-40 w-32 transition-all ease-in-out duration-200 delay-75 hover:scale-95">
       <img
         className="rounded-md"
-        src={IMG_CDN_URL + moviePoster}
+        src={POSTER_CDN_URL + moviePoster}
         alt="Movie Poster"
+        loading="lazy" /* The magic attribute for native lazy loading! */
       />
     </div>
   );

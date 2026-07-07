@@ -1,24 +1,21 @@
+// src/components/Browse.js
 import Header from "./Header";
 import useNowPlayingMovies from "../customHooks/useNowPlayingMovies";
+import useUpcomingMovies from "../customHooks/useUpcomingMovies";
 import MainContainer from "./MainContainer";
 import SecondaryContainer from "./SecondaryContainer";
-import useUpcomingMovies from "../customHooks/useUpcomingMovies";
-import useTopRatedMovies from "../customHooks/useTopRatedMovies";
-import usePopularMovies from "../customHooks/usePopularMovies";
 import GptSearch from "./GptSearch";
 import { useSelector } from "react-redux";
-
 import { Outlet } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 
 const Browse = () => {
-  //Makes API call for movies and dispatch action to add movies list in slice
+  // ONLY fetch what is visible immediately (Above the Fold)
   useNowPlayingMovies();
   useUpcomingMovies();
-  useTopRatedMovies();
-  usePopularMovies();
 
-  //subscribe to the store for getting GptSearch Component
+  // REMOVED useTopRatedMovies and usePopularMovies from here!
+
   const showGptSearch = useSelector((store) => store.search?.isGptSearch);
   const isMoviePage = useSelector((store) => store.movieInfo.isMoviePage);
 
@@ -36,7 +33,6 @@ const Browse = () => {
           <SecondaryContainer />
         </>
       )}
-      {/* Either both true that is when user search and select a movie or isMoviePage true when a user directly selects one of the movie from browse page */}
     </div>
   );
 };

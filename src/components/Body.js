@@ -3,6 +3,7 @@ import Browse from "./Browse";
 import { RouterProvider } from "react-router-dom";
 import Login from "./Login";
 import MovieInfo from "./MovieInfo";
+import Watchlist from "./Watchlist";
 
 const Body = () => {
   const appRouter = createBrowserRouter([
@@ -19,6 +20,10 @@ const Body = () => {
           element: <MovieInfo />,
         },
       ],
+    },
+    {
+      path: "/watchlist", // 2. Add the new route here!
+      element: <Watchlist />,
     },
   ]);
 

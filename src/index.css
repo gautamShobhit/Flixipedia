@@ -14,3 +14,34 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+/* Fade in the dark overlay background */
+@keyframes backdrop-fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Scale and slide up the modal with a bouncy effect */
+@keyframes modal-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-backdrop {
+  animation: backdrop-fade 0.3s ease-out forwards;
+}
+
+.animate-modal-pop {
+  /* The cubic-bezier is the secret sauce here—it creates that premium "spring" effect */
+  animation: modal-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
